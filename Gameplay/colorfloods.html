@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LYSGO | Color Flood</title>
+    <style>
+        :root {
+            --bg-color: #0b0e14;
+            --card-bg: #16213e;
+            --text-color: #1dd1a1;
+            --accent: #0f3460;
+            --nav-bg: #1a1a2e;
+        }
+
+        * { box-sizing: border-box; touch-action: manipulation; margin: 0; padding: 0; }
+
+        body { 
+            font-family: 'Segoe UI', Roboto, sans-serif; 
+            background: var(--bg-color); color: white; 
+            min-height: 100vh; display: flex; flex-direction: column;
+        }
+
+        /* --- NAVIGASI HEADER --- */
+        nav {
+            background: var(--nav-bg);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: 0 0 10px rgba(29, 209, 161, 0.3);
+        }
+
+        /* --- LAYOUT UTAMA --- */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .game-container { 
+            background: var(--card-bg); padding: 20px; border-radius: 20px; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.7); text-align: center;
+            width: 100%; max-width: 450px;
+            display: flex; flex-direction: column; gap: 15px;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+        }
+
+        .menu-row { display: flex; justify-content: center; gap: 8px; }
+        
+        select, .btn-action { 
+            padding: 8px 12px; border-radius: 8px; border: none; 
+            background: var(--accent); color: white; cursor: pointer; font-weight: bold; font-size: 0.8rem;
+            transition: 0.2s;
+        }
+
+        .btn-action:hover { background: var(--text-color); color: #0b0e14; box-shadow: 0 0 15px var(--text-color); }
+
+        /* --- BOARD GAME & GLOW EFFECT --- */
+        #game-board-wrapper {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            margin: 0 auto;
+        }
+
+        #game-board { 
+            display: grid; gap: 2px; background: #07090f; padding: 6px; 
+            border-radius: 12px; width: 100%; height: 100%;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .cell { 
+            width: 100%; height: 100%; border-radius: 3px; 
+            transition: background-color 0.4s ease, box-shadow 0.3s ease;
+        }
+
+        /* Efek cahaya saat kotak berubah */
+        .cell.active-glow {
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+            z-index: 2;
+        }
+        
+        .controls { 
+            display: flex; justify-content: center; gap: 10px; 
+            flex-wrap: wrap; 
+        }
+
+        .btn-color { 
+            width: clamp(35px, 10vw, 48px);
+            height: clamp(35px, 10vw, 48px);
+            cursor: pointer; border: 3px solid rgba(255,255,255,0.1); 
+            border-radius: 50%; transition: 0.2s;
+        }
+        .btn-color:hover { transform: scale(1.15); border-color: white; box-shadow: 0 0 15px rgba(255,255,255,0.4); }
+        
+        #message { 
+            height: 25px; font-weight: bold; font-size: 1rem; color: var(--text-color); 
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        @media (max-width: 480px) {
+            .logo { font-size: 1.2rem; }
+            .game-container { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="logo">
+            <span style="background:var(--text-color); color:black; padding:2px 8px; border-radius:5px;">LYS</span>GO
+        </a>
+        <button class="btn-action" style="padding: 5px 15px;">HOME</button>
+    </nav>
+
+    <main>
+        <div class="game-container">
+            <div class="game-header">
+                <div style="text-align: left;">
+                    <h2 style="font-size: 1.1rem;">Color Flood</h2>
+                    <p style="font-size: 0.7rem; opacity: 0.6;">Level: <span id="level-display" style="color:var(--text-color)">1</span></p>
+                </div>
+                <div class="menu-row">
+                    <select id="difficulty" onchange="resetGame()">
+                        <option value="10">10x10</option>
+                        <option value="14" selected>14x14</option>
+                        <option value="20">20x20</option>
+                    </select>
+                    <button class="btn-action" onclick="resetGame()">Reset</button>
+                </div>
+            </div>
+            
+            <div id="game-board-wrapper">
+                <div id="game-board"></div>
+            </div>
+
+            <div id="message"></div>
+
+            <div class="controls" id="color-picker"></div>
+        </div>
+    </main>
+
+    <script>
+        const COLORS = ['#FF5E5E', '#1DD1A1', '#54A0FF', '#FECA57', '#A29BFE', '#FF9F43'];
+        let boardSize = 14;
+        let board = [];
+        let currentLevel = 1;
+        let gameActive = false;
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+
+        function playSound(freq, type, duration) {
+            if (!audioCtx) return;
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e) {}
+        }
+
+        function resetGame() {
+            currentLevel = 1;
+            document.getElementById('level-display').innerText = currentLevel;
+            initGame();
+        }
+
+        function initGame() {
+            boardSize = parseInt(document.getElementById('difficulty').value);
+            gameActive = true;
+            document.getElementById('message').innerText = "";
+            renderBoard();
+        }
+
+        function renderBoard() {
+            const boardEl = document.getElementById('game-board');
+            boardEl.innerHTML = '';
+            boardEl.style.gridTemplateColumns = `repeat(${boardSize}, 1fr)`;
+            board = [];
+            
+            for (let r = 0; r < boardSize; r++) {
+                board[r] = [];
+                for (let c = 0; c < boardSize; c++) {
+                    const color = COLORS[Math.floor(Math.random() * COLORS.length)];
+                    board[r][c] = color;
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    cell.id = `c-${r}-${c}`;
+                    cell.style.backgroundColor = color;
+                    boardEl.appendChild(cell);
+                }
+            }
+        }
+
+        function handleColorClick(color) {
+            if (!gameActive) return;
+            const startColor = board[0][0];
+            if (color === startColor) return;
+
+            initAudio();
+            playSound(300 + (currentLevel * 10), 'sine', 0.1);
+            floodFill(0, 0, startColor, color);
+            checkWin();
+        }
+
+        function floodFill(r, c, oldColor, newColor) {
+            if (r < 0 || r >= boardSize || c < 0 || c >= boardSize) return;
+            if (board[r][c] !== oldColor || board[r][c] === newColor) return;
+            
+            board[r][c] = newColor;
+            const el = document.getElementById(`c-${r}-${c}`);
+            el.style.backgroundColor = newColor;
+
+            // Tambahkan efek glow sementara saat warna berubah
+            el.classList.add('active-glow');
+            setTimeout(() => el.classList.remove('active-glow'), 400);
+
+            floodFill(r + 1, c, oldColor, newColor);
+            floodFill(r - 1, c, oldColor, newColor);
+            floodFill(r, c + 1, oldColor, newColor);
+            floodFill(r, c - 1, oldColor, newColor);
+        }
+
+        function checkWin() {
+            const firstColor = board[0][0];
+            const isWin = board.every(row => row.every(c => c === firstColor));
+
+            if (isWin) {
+                gameActive = false;
+                playSound(600, 'sine', 0.4);
+                document.getElementById('message').innerText = "✨ LEVEL CLEAR ✨";
+                setTimeout(() => {
+                    currentLevel++;
+                    document.getElementById('level-display').innerText = currentLevel;
+                    initGame();
+                }, 1200);
+            }
+        }
+
+        const picker = document.getElementById('color-picker');
+        COLORS.forEach(color => {
+            const btn = document.createElement('div');
+            btn.className = 'btn-color';
+            btn.style.backgroundColor = color;
+            btn.style.boxShadow = `0 4px 10px ${color}44`; // Soft glow sesuai warna tombol
+            btn.addEventListener('click', () => handleColorClick(color));
+            picker.appendChild(btn);
+        });
+
+        initGame();
+    </script>
+</body>
+</html>
