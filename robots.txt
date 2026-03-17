@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lysgo.my.id/sitemap.xml
