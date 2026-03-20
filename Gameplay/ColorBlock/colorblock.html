@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sulis Block Puzzle - Master Pro</title>
+    <link rel="stylesheet" href="style.css">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5697003382806678"
+     crossorigin="anonymous"></script>
+     <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-ef+6k-30-ac+ty"
+     data-ad-client="ca-pub-5697003382806678"
+     data-ad-slot="6252295843"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</head>
+<body>
+
+    <nav id="ui-header">
+        <div class="high-score-container">👑 <span id="highScore">0</span></div>
+        <div id="score" class="score-value">0</div>
+        <button id="open-guide">💡</button>
+    </nav>
+
+    <div id="powerup-bar">
+        <button class="powerup-btn" id="hammer-btn">🔨<div class="count-badge" id="hammer-count">0</div></button>
+        <button class="powerup-btn" id="refresh-btn">🔄<div class="count-badge" id="refresh-count">0</div></button>
+    </div>
+
+    <div id="game-container">
+        <canvas id="gameCanvas" width="400" height="640"></canvas>
+        
+        <div id="guide-modal" class="modal" style="display: flex;">
+            <h2 style="color: var(--accent-color)">Panduan Master</h2>
+            <p>1. Isi baris/kolom sampai penuh.<br>
+               2. Gunakan 🔨 untuk hapus 1 blok.<br>
+               3. Gunakan 🔄 untuk <b>hapus 2 baris bawah</b> dan ganti blok baru!</p>
+            <button class="btn-ui" id="close-guide">MENGERTI</button>
+        </div>
+
+        <div id="game-over-modal" class="modal">
+            <h1 class="go-title">GAME OVER</h1>
+            <p style="font-size: 20px;">Skor Kamu: <span id="finalScore" class="final-score-val">0</span></p>
+            <button class="btn-ui" id="btn-restart">MAIN LAGI</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5697003382806678"
+     crossorigin="anonymous"></script>
+</body>
+</html>

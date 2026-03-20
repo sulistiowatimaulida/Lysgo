@@ -1,0 +1,110 @@
+:root {
+    --bg-color: #c64545; 
+    --board-bg: #2b1d1d;
+    --text-primary: #ffffff;
+    --accent-color: #ffd740;
+    --modal-bg: rgba(0, 0, 0, 0.98);
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    overflow: hidden;
+    touch-action: none;
+    height: 100vh;
+}
+
+#ui-header {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    box-sizing: border-box;
+}
+
+.high-score-container { font-weight:bold; font-size: 18px; }
+.score-value { font-size: 42px; font-weight: bold; margin: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+
+#open-guide { background:none; border:none; font-size:28px; cursor:pointer; }
+
+#powerup-bar { display: flex; gap: 20px; margin-bottom: 10px; }
+
+.powerup-btn {
+    background: #444;
+    border: 2px solid white;
+    border-radius: 50%;
+    width: 55px; height: 55px;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    transition: transform 0.2s;
+}
+
+.powerup-btn.active { border-color: var(--accent-color); transform: scale(1.1); box-shadow: 0 0 15px var(--accent-color); }
+
+.pulse-warn {
+    animation: pulse-red 1s infinite alternate;
+    border-color: #ff5252 !important;
+}
+
+@keyframes pulse-red {
+    from { transform: scale(1); box-shadow: 0 0 0px #ff5252; }
+    to { transform: scale(1.2); box-shadow: 0 0 20px #ff5252; }
+}
+
+.count-badge {
+    position: absolute;
+    top: -5px; right: -5px;
+    background: white; color: black;
+    border-radius: 50%; width: 20px; height: 20px;
+    font-size: 12px; font-weight: bold;
+    display: flex; align-items: center; justify-content: center;
+}
+
+#game-container {
+    position: relative;
+    width: 95vw;
+    max-width: 380px;
+    aspect-ratio: 2 / 3.2;
+}
+
+canvas { width: 100%; height: 100%; background-color: var(--board-bg); border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+
+.modal {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--modal-bg);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    z-index: 5000;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.go-title { color: #ff5252; font-size: 48px; margin: 0; }
+.final-score-val { font-weight:bold; color:var(--accent-color); }
+
+.btn-ui {
+    padding: 15px 50px;
+    background: var(--accent-color);
+    border: none;
+    border-radius: 35px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    margin-top: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
