@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cek Keaslian Produk</title>
+    <script src="products.js"></script>
+    
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f4f4; padding: 20px; }
+        .card { max-width: 450px; margin: auto; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .input-group { margin-bottom: 15px; }
+        input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #27ae60; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #219150; }
+        #hasil { margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px; display: none; }
+        .img-produk { width: 100%; height: auto; border-radius: 10px; margin-top: 10px; border: 1px solid #eee; }
+        .status-valid { color: #27ae60; font-weight: bold; }
+        .status-invalid { color: #e74c3c; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Verifikasi Produk</h2>
+    <div class="input-group">
+        <input type="text" id="kodeInput" placeholder="Masukkan ID atau Nama Produk...">
+    </div>
+    <button onclick="verifikasi()">Cek Sekarang</button>
+
+    <div id="hasil"></div>
+</div>
+
+<script>
+  function verifikasi() {
+    const inputField = document.getElementById('kodeInput');
+    const display = document.getElementById('hasil');
+    
+    // Ambil input, buang spasi, jadikan huruf kecil semua
+    const input = inputField.value.trim().toLowerCase();
+
+    // Reset tampilan dan hentikan jika input kosong
+    if (input === "") {
+        alert("Masukkan kode terlebih dahulu!");
+        display.style.display = "none";
+        return;
+    }
+
+    // Cari produk yang id-nya sama persis
+    const produk = db_produk.find(p => p.id.toLowerCase() === input);
+
+    // Aktifkan display
+    display.style.display = "block";
+
+    if (produk) {
+        // Jika COCOK
+        display.innerHTML = `
+            <div style="color: #27ae60; font-weight: bold; margin-bottom: 10px;">✔ PRODUK TERVERIFIKASI</div>
+            <div style="border: 1px solid #ddd; padding: 10px; border-radius: 8px;">
+                <img src="${produk.images[0]}" style="width: 100%; border-radius: 5px;">
+                <h3 style="margin: 10px 0;">${produk.nama}</h3>
+                <p style="font-size: 14px; color: #555;">${produk.desc}</p>
+                <p style="font-size: 14px; color: #555;">${produk.pemilik}</p>
+                <strong style="color: #2c3e50;">Rp ${produk.harga.toLocaleString('id-ID')}</strong>
+            </div>
+        `;
+    } else {
+        // Jika TIDAK COCOK
+        display.innerHTML = `
+            <div style="background: #fff5f5; border: 1px solid #feb2b2; padding: 15px; border-radius: 8px;">
+                <div style="color: #c53030; font-weight: bold;">✖ KODE TIDAK VALID</div>
+                <p style="color: #742a2a; font-size: 13px; margin-top: 5px;">
+                    Kode "<strong>${input}</strong>" tidak terdaftar. Pastikan penulisan kode benar atau hubungi admin.
+                </p>
+            </div>
+        `;
+    }
+}
+
+
+</script>
+
+</body>
+</html>
