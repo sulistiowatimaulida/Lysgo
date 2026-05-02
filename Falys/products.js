@@ -9,10 +9,10 @@ const db_produk = [
     },
     { 
         id: "tailor", 
-        nama: "Tailor", 
+        nama: "Batik Bergundy", 
         harga: 345000, 
         images: ["img/batik-bergundy.png"], 
-        desc: "Ingin baju yang nggak pasaran dan pas di badan? Serahkan pada ahlinya di [Nama Brand].",
+        desc: "Ingin baju yang nggak pasaran dan pas di badan? Serahkan pada ahlinya di FaLys Collection.",
         pemilik: "Design : Sulis"
     },
     { 
