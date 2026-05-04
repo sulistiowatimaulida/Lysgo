@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FALYS COLLECTION | Boutique & Jasa Jahit Profesional</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-cream: #FDFBF0;
+            --dark-brown: #4A4036;
+            --accent-gold: #C5A059;
+            --white: #ffffff;
+        }
+        /* Penyesuaian slide gambar di dalam modal detail */
+.modal .carousel-control-prev-icon,
+.modal .carousel-control-next-icon {
+    background-color: rgba(74, 64, 54, 0.5); /* Warna cokelat transparan */
+    border-radius: 50%;
+    padding: 15px;
+    background-size: 50%;
+}
+.modal .carousel-indicators [data-bs-target] {
+    background-color: var(--dark-brown);
+}
+
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-cream);
+            color: var(--dark-brown);
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h5, .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            color: var(--dark-brown);
+        }
+
+        /* --- Navbar --- */
+        .navbar {
+            background-color: rgba(250, 247, 230, 0.95) !important;
+            border-bottom: 1px solid #E6E2D3;
+            backdrop-filter: blur(10px);
+        }
+
+        /* --- Banner Slide / Carousel --- */
+        .carousel-item {
+            height: 600px;
+            min-height: 400px;
+        }
+        .carousel-item img {
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+            filter: brightness(0.7);
+        }
+        .carousel-caption {
+            bottom: 30%;
+            z-index: 10;
+        }
+        .carousel-caption h2 {
+            font-size: 3.5rem;
+            color: var(--white);
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        }
+        .carousel-caption p {
+            font-size: 1.2rem;
+            color: var(--white);
+        }
+
+        /* --- Katalog Produk --- */
+        .card-product {
+            border: none;
+            background-color: var(--white);
+            box-shadow: 0 4px 20px rgba(74, 64, 54, 0.08);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .card-product:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 10px 30px rgba(197, 160, 89, 0.2);
+        }
+        .img-placeholder {
+            height: 280px;
+            overflow: hidden;
+        }
+        .img-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .card-product:hover .img-placeholder img {
+            transform: scale(1.1);
+        }
+
+        /* --- Form Pemesanan --- */
+        .order-box {
+            background-color: var(--white);
+            border-radius: 25px;
+            padding: 50px;
+            border: 1px solid #eee;
+        }
+        .form-control, .form-select {
+            border-radius: 10px;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 0.25rem rgba(197, 160, 89, 0.1);
+        }
+
+        .btn-whatsapp {
+            background-color: #25d366;
+            color: var(--white);
+            border: none;
+            padding: 18px;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: 0.3s;
+            font-size: 1.1rem;
+        }
+        .btn-whatsapp:hover {
+            background-color: #128c7e;
+            color: var(--white);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        footer {
+            background-color: var(--dark-brown);
+            color: var(--bg-cream);
+        }
+
+        @media (max-width: 768px) {
+            .carousel-item { height: 400px; }
+            .carousel-caption h2 { font-size: 2rem; }
+            .order-box { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-3" href="#">FALYS COLLECTION</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto small fw-bold">
+                    <li class="nav-item"><a class="nav-link px-3" href="#home">HOME</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="#produk">KATALOG</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="#pesan">PESAN SEKARANG</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header id="home">
+        <div id="mainCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="2"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="5000">
+                    <img src="img/batik-bergundy.png" alt="Fashion 1">
+                    <div class="carousel-caption">
+                        <h2 class="fw-bold">Premium Tailoring</h2>
+                        <p>Kualitas jahitan butik untuk hasil yang sempurna dan elegan.</p>
+                        <a href="#produk" class="btn btn-light btn-lg rounded-pill px-4 fw-bold mt-3">Lihat Katalog</a>
+                    </div>
+                </div>
+                <div class="carousel-item" data-bs-interval="5000">
+                    <img src="https://images.unsplash.com/photo-1598554747436-c9293d6a588f?q=80&w=1374&auto=format&fit=crop" alt="Fashion 2">
+                    <div class="carousel-caption">
+                        <h2 class="fw-bold">Custom Design</h2>
+                        <p>Wujudkan desain pakaian impian Anda bersama penjahit ahli kami.</p>
+                        <a href="#pesan" class="btn btn-warning btn-lg rounded-pill px-4 fw-bold mt-3 border-0" style="background-color: var(--accent-gold); color: white;">Pesan Sekarang</a>
+                    </div>
+                </div>
+                <div class="carousel-item" data-bs-interval="5000">
+                    <img src="img/fotbar-bergundy.jpg" alt="Fashion 3">
+                    <div class="carousel-caption">
+                        <h2 class="fw-bold">Falys Collection</h2>
+                        <p>Kenyamanan dan gaya dalam setiap detail kain yang kami jahit.</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+    </header>
+
+    <section id="produk" class="container py-5">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold display-6">Layanan Kami</h2>
+            <div class="mx-auto bg-warning mb-3" style="width: 60px; height: 3px; background-color: var(--accent-gold) !important;"></div>
+            <p class="text-muted">Klik produk untuk melihat detail spesifikasi dan pengerjaan.</p>
+        </div>
+        
+        <div id="produkContainer" class="row g-4">
+            </div>
+    </section>
+
+    <section id="pesan" class="container py-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-9 col-lg-8">
+                <div class="order-box shadow-sm">
+                    <div class="text-center mb-5">
+                        <h2 class="fw-bold">Formulir Pemesanan</h2>
+                        <p class="small text-muted">Lengkapi data untuk konsultasi pesanan</p>
+                    </div>
+                    
+                    <form id="orderForm">
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-uppercase small">Nama Lengkap</label>
+                            <input type="text" id="nama" class="form-control" placeholder="Masukkan nama anda" required>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-uppercase small">Alamat Lengkap</label>
+                            <textarea id="alamat" class="form-control" rows="2" placeholder="Alamat rumah pengiriman" required></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label fw-bold text-uppercase small">Ukuran Baju</label>
+                                <select id="ukuran" class="form-select" required>
+                                    <option value="" selected disabled>Pilih Ukuran</option>
+                                    <option value="S">S (Small)</option>
+                                    <option value="M">M (Medium)</option>
+                                    <option value="L">L (Large)</option>
+                                    <option value="XL">XL (Extra Large)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label fw-bold text-uppercase small">Opsi Kain</label>
+                                <select id="opsiKain" class="form-select">
+                                    <option value="Kain dari Toko">Sediakan Kain dari Falys Collection</option>
+                                    <option value="Kain Sendiri">Saya akan Kirim Kain Sendiri</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-5">
+                            <label class="form-label fw-bold text-uppercase small">Catatan Tambahan (Model/Warna)</label>
+                            <textarea id="catatan" class="form-control" rows="3" placeholder="Jelaskan detail model yang anda inginkan..."></textarea>
+                        </div>
+                        <button type="button" onclick="kirimKeWhatsApp()" class="btn btn-whatsapp w-100 shadow">
+                            <i class="fab fa-whatsapp me-2"></i> KIRIM PESANAN KE WHATSAPP
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="modalContainer"></div>
+
+    <footer class="py-5 text-center">
+        <div class="container">
+            <h4 class="fw-bold mb-4">FALYS COLLECTION</h4>
+            <p class="opacity-75 small mb-4 px-3">Boutique & Tailor. Mewujudkan busana terbaik untuk hari spesial Anda.</p>
+            <div class="mb-4">
+                <a href="https://www.instagram.com/falyscollection" class="text-white mx-2"><i class="fab fa-instagram fa-lg"></i></a>
+                <a href="#" class="text-white mx-2"><i class="fab fa-whatsapp fa-lg"></i></a>
+            </div>
+            <hr class="mx-auto mb-4" style="width: 200px; opacity: 0.2;">
+            <p class="mb-0 text-muted small">&copy; 2026 Falys Collection. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="katalog.js"></script>
+    <script>
+        function kirimKeWhatsApp() {
+            const nama = document.getElementById('nama').value;
+            const alamat = document.getElementById('alamat').value;
+            const ukuran = document.getElementById('ukuran').value;
+            const opsiKain = document.getElementById('opsiKain').value;
+            const catatan = document.getElementById('catatan').value;
+            const nomorAdmin = "6288902899156";
+
+            if (!nama || !alamat || !ukuran) {
+                alert("Harap lengkapi Nama, Alamat, dan Ukuran sebelum memesan.");
+                return;
+            }
+
+            const pesan = `Halo Admin Falys Collection,%0A%0A` +
+                          `Saya ingin memesan jasa jahitan melalui website:%0A%0A` +
+                          `*Nama:* ${nama}%0A` +
+                          `*Alamat:* ${alamat}%0A` +
+                          `*Ukuran:* ${ukuran}%0A` +
+                          `*Opsi Kain:* ${opsiKain}%0A` +
+                          `*Catatan:* ${catatan || '-'}`;
+
+            window.open(`https://wa.me/${nomorAdmin}?text=${pesan}`, '_blank');
+        }
+    </script>
+</body>
+</html>
