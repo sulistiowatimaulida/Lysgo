@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lysgo Gaming - Cascade Tiles</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Cascade Tiles</h1>
+        <div class="stats">
+            Level: <span id="level-txt">1</span> | 
+            Skor: <span id="score-txt">0</span> | 
+            Sisa Kartu: <span id="rem-txt">0</span>
+        </div>
+        <div class="control-bar">
+            <button class="btn-utility" onclick="triggerShuffleHint()">🔀 Shuffle (<span id="shuffle-count">3</span>)</button>
+            <button class="btn-utility btn-info" onclick="toggleInfoModal(true)">ℹ️ Panduan</button>
+        </div>
+    </header>
+
+    <div id="slot-container"></div>
+    <div id="game-board"></div>
+
+    <div id="lose-overlay" class="overlay">
+        <div class="modal">
+            <h2>Game Over</h2>
+            <p>Slot penuh dengan 4 kartu berbeda!</p>
+            <button onclick="restartGame()">Coba Lagi</button>
+        </div>
+    </div>
+
+    <div id="win-overlay" class="overlay">
+        <div class="modal win">
+            <h2>Level Selesai!</h2>
+            <div id="win-stars" class="star-container"></div>
+            <p>Skor Level: <span id="win-score-txt">0</span></p>
+            <button onclick="nextLevel()">Level Berikutnya</button>
+        </div>
+    </div>
+
+    <div id="info-overlay" class="overlay">
+        <div class="modal modal-info">
+            <h2>Cara Bermain Cascade Tiles</h2>
+            <div class="info-content">
+                <p><strong>🎯 Tujuan:</strong> Bersihkan semua ubin yang ada di papan permainan untuk memenangkan level!</p>
+                <hr>
+                <p><strong>🧩 Cara Main:</strong></p>
+                <ul>
+                    <li>Klik ubin yang terbuka untuk memindahkannya ke <b>Slot Penampung</b> di atas.</li>
+                    <li>Jika ada <b>2 ubin kembar</b> di dalam slot, mereka akan otomatis hancur dan memberi skor.</li>
+                    <li>Hati-hati! Slot hanya muat <b>4 ubin berbeda</b>. Jika slot penuh dan buntu, kamu kalah.</li>
+                </ul>
+                <hr>
+                <p><strong>🔒 Aturan Kuncian (Mahjong):</strong></p>
+                <ul>
+                    <li>Ubin tidak boleh tertindih oleh ubin lain di layer atasnya.</li>
+                    <li>Ubin tidak boleh terjepit di kedua sisi sampingnya (Kiri & Kanan sekaligus).</li>
+                </ul>
+                <hr>
+                <p><strong>🔀 Fitur Bantuan:</strong> Gunakan tombol <i>Shuffle</i> untuk mengacak urutan ubin di papan jika kamu merasa buntu (Maksimal 3x per level).</p>
+            </div>
+            <button onclick="toggleInfoModal(false)">Tutup Panduan</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Cascade Tiles. All Rights Reserved.</p>
+        <p>Created by <span class="brand-name">Lysgo Gaming</span></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+                             </html>
+                              
