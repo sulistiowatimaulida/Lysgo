@@ -328,3 +328,15 @@ function nextLevel() {
     currentLevel++;
     initGame(currentLevel);
 }
+
+// ==========================================
+// FUNGSI UNTUK MODAL INFORMASI PANDUAN
+// ==========================================
+function toggleInfoModal(show) {
+    const infoOverlay = document.getElementById('info-overlay');
+    if (show) {
+        infoOverlay.style.display = 'flex';
+    } else {
+        infoOverlay.style.display = 'none';
+    }
+}
