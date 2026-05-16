@@ -1,0 +1,289 @@
+* {
+    box-sizing: border-box;
+    user-select: none;
+}
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    color: white;
+}
+header {
+    text-align: center;
+    margin-top: 10px;
+}
+h1 { 
+    margin: 5px 0; 
+    font-size: 24px; 
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.6); 
+}
+.stats { 
+    font-size: 15px; 
+    margin-bottom: 5px; 
+    color: #cbd5e1; 
+}
+
+/* Bar Skor dan Kontrol */
+.control-bar {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.btn-utility {
+    background: #f59e0b;
+    color: #1e293b;
+    border: none;
+    padding: 6px 14px;
+    font-weight: bold;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    transition: background 0.2s, transform 0.1s;
+}
+.btn-utility:hover { 
+    background: #d97706; 
+}
+.btn-utility:active { 
+    transform: scale(0.95); 
+}
+
+/* Slot Penampung Atas */
+#slot-container {
+    width: 290px;
+    height: 75px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 3px solid #5c3a21;
+    border-radius: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 5px;
+    gap: 8px;
+    margin-bottom: 15px;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.9);
+}
+
+/* Area Papan Mahjong */
+#game-board {
+    position: relative;
+    width: 400px;
+    height: 520px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Kartu Mahjong dengan Efek 3D Tebal Miring */
+.tile {
+    position: absolute;
+    width: 44px;
+    height: 58px;
+    background: #ffffff;
+    border-radius: 4px;
+    border-bottom: 5px solid #a3a3a3;
+    border-right: 4px solid #c2c2c2;
+    border-top: 1px solid #fff;
+    border-left: 1px solid #fff;
+    box-shadow: 3px 4px 6px rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.1s, opacity 0.15s, filter 0.2s, left 0.3s ease, top 0.3s ease;
+}
+
+.tile.locked {
+    filter: brightness(0.55) grayscale(0.1);
+    cursor: not-allowed;
+    box-shadow: 1px 2px 3px rgba(0,0,0,0.5);
+    transform: none !important;
+}
+
+.tile:hover:not(.locked) {
+    transform: translateY(-3px);
+    filter: brightness(1.15);
+    box-shadow: 3px 7px 10px rgba(0,0,0,0.5);
+}
+
+/* Slot Kartu Atas */
+.slot-tile {
+    width: 46px;
+    height: 56px;
+    background: #ffffff;
+    border-radius: 4px;
+    border-bottom: 4px solid #a3a3a3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    box-shadow: 1px 2px 4px rgba(0,0,0,0.5);
+    animation: popIn 0.2s forwards;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.slot-tile.destroying {
+    animation: shatter 0.3s ease-out forwards;
+    pointer-events: none;
+}
+
+@keyframes shatter {
+    0% { transform: scale(1); opacity: 1; filter: brightness(1.5); }
+    100% { transform: scale(0); opacity: 0; filter: brightness(2.5) blur(3px); }
+}
+
+.burst-particle {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: flyAway 0.3s ease-out forwards;
+}
+
+@keyframes flyAway {
+    0% { transform: translate(0, 0) scale(1); opacity: 1; }
+    100% { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
+}
+
+/* Pop-up Overlay */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85);
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.modal {
+    background: #ffffff;
+    color: #1e293b;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    max-width: 300px;
+    width: 80%;
+}
+.modal h2 { margin-top: 0; color: #e11d48; }
+.modal.win h2 { color: #16a34a; }
+
+/* Desain Bintang */
+.star-container {
+    font-size: 32px;
+    color: #e2e8f0;
+    margin: 15px 0;
+}
+.star-container .fill {
+    color: #fbbf24;
+    text-shadow: 0 0 8px rgba(251,191,36,0.6);
+}
+
+.modal button {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 10px 22px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 15px;
+    font-weight: bold;
+}
+.modal button:hover { background: #1d4ed8; }
+
+/* ==========================================
+   DESAIN FOOTER CASCADE TILES
+   ========================================== */
+footer {
+    width: 100%;
+    text-align: center;
+    padding: 20px 10px;
+    margin-top: auto; /* Memaksa footer tetap di bawah jika layar tinggi */
+    font-size: 13px;
+    color: #94a3b8;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background-color: rgba(15, 32, 39, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+footer p {
+    margin: 4px 0;
+}
+
+footer .brand-name {
+    color: #f59e0b;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* ==========================================
+   MODAL INFORMASI / PANDUAN GAME
+   ========================================== */
+.btn-info {
+    background: #0ea5e9 !important; /* Warna biru informatif */
+    color: white !important;
+}
+.btn-info:hover {
+    background: #0284c7 !important;
+}
+
+.modal-info {
+    max-width: 360px !important;
+    width: 90% !important;
+    text-align: left !important; /* Teks rata kiri agar rapi dibaca */
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-info h2 {
+    text-align: center;
+    color: #0ea5e9;
+    margin-bottom: 10px;
+}
+
+.info-content {
+    overflow-y: auto; /* Bisa di-scroll jika teksnya panjang di HP */
+    font-size: 14px;
+    line-height: 1.5;
+    color: #334155;
+    padding-right: 5px;
+}
+
+.info-content hr {
+    border: 0;
+    border-top: 1px solid #e2e8f0;
+    margin: 10px 0;
+}
+
+.info-content ul {
+    padding-left: 20px;
+    margin: 5px 0;
+}
+
+.info-content li {
+    margin-bottom: 5px;
+}
+
+.modal-info button {
+    width: 100%;
+    margin-top: 20px;
+    background: #0ea5e9;
+}
+.modal-info button:hover {
+    background: #0284c7;
+}
